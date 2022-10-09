@@ -8,7 +8,8 @@ import pro.sky.KursWork2.model.Question;
 import pro.sky.KursWork2.service.QuestionService;
 import pro.sky.KursWork2.service.impl.JavaQuestionService;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -16,7 +17,7 @@ public class JavaQuestionServiceTest {
     private final QuestionService questionService = new JavaQuestionService();
 
 
- /*   @AfterEach
+ /*  @AfterEach
     public void afterEach() {
         questionService.getAll().forEach(questionService::remove);
     }*/
@@ -38,14 +39,13 @@ public class JavaQuestionServiceTest {
     @Test
     public void removeTest() {
         assertThat(questionService.getAll().isEmpty());
-        assertThatExceptionOfType(QuestionAlreadyExistsException.class)
-                .isThrownBy(() -> questionService.remove(new Question("Вопрос 1 ", "Вопрос 2 ")));
+
 
         Question question = add ("Вопрос 1 ", " Ответ 1 ");
         assertEquals(1, questionService.getAll().size());
 
         assertThatExceptionOfType(QuestionNotFoundException.class).
-                isThrownBy(() -> questionService.remove(new Question("Вопрос 1 ", "Вопрос 2 ")));
+                isThrownBy(() -> questionService.remove(new Question("Вопрос 1 ", "Ответ 1 ")));
 
        questionService.remove(question);
        assertThat(questionService.getAll().isEmpty());
@@ -60,7 +60,7 @@ public class JavaQuestionServiceTest {
         assertEquals(6, questionService.getAll().size());
     }
 
-    @Test
+
     public Question add(String question, String answer) {
         return questionService.add(new Question(question,answer));
     }
